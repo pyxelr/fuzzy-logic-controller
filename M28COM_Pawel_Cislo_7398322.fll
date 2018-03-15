@@ -1,0 +1,349 @@
+Engine: 
+InputVariable: t_ins
+  description: Temperature inside the flat (in Celsius degrees)
+  enabled: true
+  range: -10.000 30.000
+  lock-range: false
+  term: very_low Trapezoid -10.000 -10.000 -4.000 0.400
+  term: low Trapezoid -6.000 -4.000 5.200 8.800
+  term: neutral Trapezoid 6.000 8.000 12.800 14.400
+  term: high Trapezoid 12.400 15.600 21.600 23.200
+  term: very_high Trapezoid 18.600 21.600 30.000 30.000
+InputVariable: t_out
+  description: temperature outside the flat (in Celsius degrees)
+  enabled: true
+  range: -30.000 30.000
+  lock-range: false
+  term: very_low Trapezoid -30.000 -30.000 -20.000 -18.000
+  term: low Trapezoid -20.000 -18.000 -8.000 -6.000
+  term: neutral Trapezoid -8.000 -6.000 4.000 6.000
+  term: high Trapezoid 4.000 6.000 16.000 18.000
+  term: very_high Trapezoid 16.000 18.000 30.000 30.000
+InputVariable: havc_power
+  description: power of HAVC (off or on)
+  enabled: true
+  range: 0.000 2.000
+  lock-range: false
+  term: off Binary 0.999 -inf
+  term: on Binary 1.000 inf
+InputVariable: rain
+  description: strength of the rain (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  term: light Triangle 0.000 0.000 65.000
+  term: heavy Triangle 35.000 100.000 100.000
+InputVariable: light_out
+  description: brightness outside (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  term: dark Triangle 0.000 0.000 50.000
+  term: medium Triangle 0.001 50.000 99.999
+  term: bright Triangle 50.000 100.000 100.000
+InputVariable: room_window
+  description: the presence of a window in a room (yes or no)
+  enabled: true
+  range: 0.000 2.000
+  lock-range: false
+  term: no Binary 0.999 -inf
+  term: yes Binary 1.000 inf
+InputVariable: sound_detector
+  description: sound level detection (in dB)
+  enabled: true
+  range: 0.000 130.000
+  lock-range: false
+  term: quiet Triangle 0.000 0.000 80.000
+  term: loud Triangle 50.000 130.000 130.000
+InputVariable: word_detector
+  description: detector of word "alexa help" (yes or no)
+  enabled: true
+  range: 0.000 2.000
+  lock-range: false
+  term: not_help Trapezoid 0.000 0.000 0.750 1.250
+  term: help Trapezoid 0.750 1.250 2.000 2.000
+InputVariable: pulse_sensor
+  description: pulse rate measured (in bpm)
+  enabled: true
+  range: 0.000 120.000
+  lock-range: false
+  term: dangerous_below_limit Trapezoid 0.000 0.000 35.000 42.500
+  term: athlete Trapezoid 39.000 40.000 60.000 62.500
+  term: normal Trapezoid 58.500 60.000 100.000 102.500
+  term: dangerous_over_limit Trapezoid 99.000 100.000 120.000 120.000
+InputVariable: closed_opened_sensor
+  description: door sensor determining if the doors are fully closed or opened
+  enabled: true
+  range: 0.000 3.000
+  lock-range: false
+  term: none Rectangle 0.000 0.999
+  term: closed Rectangle 1.000 2.000
+  term: opened Rectangle 2.000 3.000
+InputVariable: motion_detector_doors
+  description: threshold of pixels that has to change in a moment (determined in a number of pixels)
+  enabled: true
+  range: 0.000 30000.000
+  lock-range: false
+  term: below_threshold Trapezoid 0.000 0.000 14000.000 16000.000
+  term: above_threshold Trapezoid 14000.000 16000.000 30000.000 30000.000
+InputVariable: time_of_opened_doors
+  description: time of opened doors below threshold (measured in seconds)
+  enabled: true
+  range: 0.000 50.000
+  lock-range: false
+  term: less_than_25seconds Trapezoid 0.000 0.000 24.000 26.000
+  term: more_than_25seconds Trapezoid 24.000 26.000 50.000 50.000
+InputVariable: pressure_on_elevator
+  description: pressure on the elevator with a limit of 360 (measured in kg)
+  enabled: true
+  range: 0.000 450.000
+  lock-range: false
+  term: below_limit Trapezoid 0.000 0.000 350.000 370.000
+  term: over_limit Trapezoid 350.000 370.000 450.000 450.000
+InputVariable: number_of_people_in_elevator
+  description: number of people in the elevator with a limit of 4 (yes or no)
+  enabled: true
+  range: 0.000 6.000
+  lock-range: false
+  term: below_limit Binary 4.000 -inf
+  term: over_limit Binary 4.001 inf
+InputVariable: speed_of_orientation_change
+  description: speed of orientation change of the person wearing the sensor (measured in seconds)
+  enabled: true
+  range: 0.000 3.000
+  lock-range: false
+  term: none Rectangle 0.000 0.000
+  term: fast Trapezoid 0.001 0.001 1.250 1.750
+  term: normal Trapezoid 1.250 1.750 3.000 3.000
+InputVariable: orientation_of_person_after_change
+  description: orientation of person after change (yes or no)
+  enabled: true
+  range: 0.000 2.000
+  lock-range: false
+  term: vertical Trapezoid 0.000 0.000 0.750 1.250
+  term: horizontal Trapezoid 0.750 1.250 2.000 2.000
+InputVariable: time_on_the_ground
+  description: time of a person in horizontal position on the ground (measured in minutes)
+  enabled: true
+  range: 0.000 90.000
+  lock-range: false
+  term: less_than_1_hour Trapezoid 0.000 0.000 58.000 62.000
+  term: more_than_1_hour Trapezoid 58.000 62.000 90.000 90.000
+OutputVariable: havc
+  description: power given by heater, air ventilation, heater (in Celsius degrees)
+  enabled: true
+  range: -30.000 30.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: cooler Triangle -30.000 -30.000 -2.000
+  term: air_ventilation Triangle -5.000 0.000 5.000
+  term: heater Triangle 2.000 30.000 30.000
+OutputVariable: windows
+  description: openess of windows (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: close Triangle 0.000 0.000 20.000
+  term: open Triangle 0.000 100.000 100.000
+OutputVariable: artificial_light_ins
+  description: brightness inside given by the light bulbs (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: off Rectangle 0.000 0.000
+  term: medium Trapezoid 0.001 0.001 32.500 65.000
+  term: bright Triangle 32.500 100.000 100.000
+OutputVariable: curtains
+  description: openess of curtains (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: close Triangle 0.000 0.000 20.000
+  term: open Triangle 0.000 100.000 100.000
+OutputVariable: call_patron
+  description: decision if to call a patron - based on sound detector (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: no Triangle 0.000 0.000 99.999
+  term: yes Triangle 0.001 100.000 100.000
+OutputVariable: notify_doctor
+  description: decision if to notify a doctor - based on pulse sensor (in %)
+  enabled: true
+  range: 0.000 100.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: no Triangle 0.000 0.000 99.999
+  term: yes Triangle 0.001 100.000 100.000
+OutputVariable: state_of_doors
+  description: doors are either closed, closing, opening or opened
+  enabled: true
+  range: 0.000 4.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: closed Triangle 0.000 0.000 1.000
+  term: closing Trapezoid 0.001 1.001 1.999 1.999
+  term: opening Trapezoid 2.000 2.000 3.000 4.000
+  term: opened Triangle 3.000 4.000 4.000
+OutputVariable: alarm_in_elevator
+  description: alarm sound in elevator (on or off)
+  enabled: true
+  range: 0.000 1.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: off Trapezoid 0.000 0.000 0.400 0.600
+  term: on Trapezoid 0.400 0.600 1.000 1.000
+OutputVariable: fall_sensor
+  description: decision of what fall sensor should do - based on patient behaviour
+  enabled: true
+  range: 0.000 3.000
+  lock-range: false
+  aggregation: Maximum
+  defuzzifier: Centroid 100
+  default: nan
+  lock-previous: false
+  term: none Trapezoid 0.000 0.000 0.900 1.100
+  term: notify Trapezoid 0.900 1.100 1.900 2.100
+  term: notify_and_register_for_special_examination Trapezoid 1.900 2.100 3.000 3.000
+RuleBlock: havc_on
+  description: control of windows and HAVC when HAVC is on
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if havc_power is on and t_ins is very_low then havc is very heater and windows is close
+  rule: if havc_power is on and t_ins is low then havc is heater and windows is close
+  rule: if havc_power is on and t_ins is neutral then havc is air_ventilation and windows is close
+  rule: if havc_power is on and t_ins is high then havc is cooler and windows is close
+  rule: if havc_power is on and t_ins is very_high then havc is very cooler and windows is close
+RuleBlock: havc_off
+  description: control of windows when HAVC is off
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if havc_power is off and rain is very heavy then windows is close
+  rule: if havc_power is off and rain is light and t_ins is very_low and t_out is very_low then windows is somewhat open
+  rule: if havc_power is off and rain is light and t_ins is very_low and t_out is low then windows is open
+  rule: if havc_power is off and rain is light and t_ins is very_low and t_out is neutral then windows is very open
+  rule: if havc_power is off and rain is light and t_ins is very_low and t_out is high then windows is extremely open
+  rule: if havc_power is off and rain is light and t_ins is very_low and t_out is very_high then windows is any open
+  rule: if havc_power is off and rain is light and t_ins is low and t_out is very_low then windows is seldom open
+  rule: if havc_power is off and rain is light and t_ins is low and t_out is low then windows is somewhat open
+  rule: if havc_power is off and rain is light and t_ins is low and t_out is neutral then windows is open
+  rule: if havc_power is off and rain is light and t_ins is low and t_out is high then windows is very open
+  rule: if havc_power is off and rain is light and t_ins is low and t_out is very_high then windows is extremely open
+  rule: if havc_power is off and rain is light and t_ins is neutral and t_out is very_high then windows is seldom open
+  rule: if havc_power is off and rain is light and t_ins is neutral and t_out is high then windows is somewhat open
+  rule: if havc_power is off and rain is light and t_ins is neutral and t_out is neutral then windows is open
+  rule: if havc_power is off and rain is light and t_ins is neutral and t_out is low then windows is somewhat open
+  rule: if havc_power is off and rain is light and t_ins is neutral and t_out is very_low then windows is seldom open
+  rule: if havc_power is off and rain is light and t_ins is high and t_out is very_low then windows is extremely open
+  rule: if havc_power is off and rain is light and t_ins is high and t_out is low then windows is very open
+  rule: if havc_power is off and rain is light and t_ins is high and t_out is neutral then windows is open
+  rule: if havc_power is off and rain is light and t_ins is high and t_out is high then windows is somewhat open
+  rule: if havc_power is off and rain is light and t_ins is high and t_out is very_high then windows is seldom open
+  rule: if havc_power is off and rain is light and t_ins is very_high and t_out is very_low then windows is any open
+  rule: if havc_power is off and rain is light and t_ins is very_high and t_out is low then windows is extremely open
+  rule: if havc_power is off and rain is light and t_ins is very_high and t_out is neutral then windows is very open
+  rule: if havc_power is off and rain is light and t_ins is very_high and t_out is high then windows is open
+  rule: if havc_power is off and rain is light and t_ins is very_high and t_out is very_high then windows is somewhat open
+RuleBlock: light
+  description: light control inside the house
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if room_window is no then artificial_light_ins is bright
+  rule: if room_window is yes and light_out is dark then artificial_light_ins is bright and curtains is close
+  rule: if room_window is yes and light_out is medium then artificial_light_ins is medium and curtains is somewhat open
+  rule: if room_window is yes and light_out is bright then artificial_light_ins is off and curtains is very open
+RuleBlock: call_patron
+  description: decision if to call a patron
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if sound_detector is quiet and word_detector is not_help then call_patron is no
+  rule: if sound_detector is quiet and word_detector is help then call_patron is yes
+  rule: if sound_detector is loud then call_patron is yes
+RuleBlock: pulse_sensor
+  description: decision if to notify a doctor
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if pulse_sensor is dangerous_below_limit then notify_doctor is any yes
+  rule: if pulse_sensor is athlete then notify_doctor is very somewhat no
+  rule: if pulse_sensor is normal then notify_doctor is no
+  rule: if pulse_sensor is dangerous_over_limit then notify_doctor is any yes
+RuleBlock: doors
+  description: opening and closing doors
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if closed_opened_sensor is closed then state_of_doors is closed with 0.5
+  rule: if closed_opened_sensor is opened then state_of_doors is opened with 0.5
+  rule: if motion_detector_doors is above_threshold then state_of_doors is opening with 1
+  rule: if motion_detector_doors is below_threshold and time_of_opened_doors is more_than_25seconds then state_of_doors is closing with 1
+RuleBlock: alarm_in_elevator
+  description: decision if to turn on the alarm in elevator
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if pressure_on_elevator is below_limit and number_of_people_in_elevator is below_limit then alarm_in_elevator is off
+  rule: if pressure_on_elevator is below_limit and number_of_people_in_elevator is over_limit then alarm_in_elevator is on
+  rule: if pressure_on_elevator is over_limit and number_of_people_in_elevator is below_limit then alarm_in_elevator is on
+  rule: if pressure_on_elevator is over_limit and number_of_people_in_elevator is over_limit then alarm_in_elevator is on
+RuleBlock: fall_detector
+  description: determination what the fall detector should do
+  enabled: true
+  conjunction: Minimum
+  disjunction: Maximum
+  implication: Minimum
+  activation: General
+  rule: if speed_of_orientation_change is normal and orientation_of_person_after_change is horizontal and time_on_the_ground is more_than_1_hour then fall_sensor is notify
+  rule: if speed_of_orientation_change is fast and orientation_of_person_after_change is horizontal and time_on_the_ground is less_than_1_hour then fall_sensor is notify
+  rule: if speed_of_orientation_change is fast and orientation_of_person_after_change is horizontal and time_on_the_ground is more_than_1_hour then fall_sensor is notify_and_register_for_special_examination
+  rule: if speed_of_orientation_change is normal and orientation_of_person_after_change is horizontal and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  rule: if speed_of_orientation_change is normal and orientation_of_person_after_change is vertical and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  rule: if speed_of_orientation_change is normal and orientation_of_person_after_change is vertical and time_on_the_ground is more_than_1_hour then fall_sensor is none
+  rule: if speed_of_orientation_change is fast and orientation_of_person_after_change is vertical and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  rule: if speed_of_orientation_change is fast and orientation_of_person_after_change is vertical and time_on_the_ground is more_than_1_hour then fall_sensor is none

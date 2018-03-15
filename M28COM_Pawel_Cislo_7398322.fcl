@@ -1,0 +1,342 @@
+//Code automatically generated with fuzzylite 6.0.
+
+FUNCTION_BLOCK 
+
+VAR_INPUT
+  t_ins: REAL;
+  t_out: REAL;
+  havc_power: REAL;
+  rain: REAL;
+  light_out: REAL;
+  room_window: REAL;
+  sound_detector: REAL;
+  word_detector: REAL;
+  pulse_sensor: REAL;
+  closed_opened_sensor: REAL;
+  motion_detector_doors: REAL;
+  time_of_opened_doors: REAL;
+  pressure_on_elevator: REAL;
+  number_of_people_in_elevator: REAL;
+  speed_of_orientation_change: REAL;
+  orientation_of_person_after_change: REAL;
+  time_on_the_ground: REAL;
+END_VAR
+
+VAR_OUTPUT
+  havc: REAL;
+  windows: REAL;
+  artificial_light_ins: REAL;
+  curtains: REAL;
+  call_patron: REAL;
+  notify_doctor: REAL;
+  state_of_doors: REAL;
+  alarm_in_elevator: REAL;
+  fall_sensor: REAL;
+END_VAR
+
+FUZZIFY t_ins
+  RANGE := (-10.000 .. 30.000);
+  TERM very_low := Trapezoid -10.000 -10.000 -4.000 0.400;
+  TERM low := Trapezoid -6.000 -4.000 5.200 8.800;
+  TERM neutral := Trapezoid 6.000 8.000 12.800 14.400;
+  TERM high := Trapezoid 12.400 15.600 21.600 23.200;
+  TERM very_high := Trapezoid 18.600 21.600 30.000 30.000;
+END_FUZZIFY
+
+FUZZIFY t_out
+  RANGE := (-30.000 .. 30.000);
+  TERM very_low := Trapezoid -30.000 -30.000 -20.000 -18.000;
+  TERM low := Trapezoid -20.000 -18.000 -8.000 -6.000;
+  TERM neutral := Trapezoid -8.000 -6.000 4.000 6.000;
+  TERM high := Trapezoid 4.000 6.000 16.000 18.000;
+  TERM very_high := Trapezoid 16.000 18.000 30.000 30.000;
+END_FUZZIFY
+
+FUZZIFY havc_power
+  RANGE := (0.000 .. 2.000);
+  TERM off := Binary 0.999 -inf;
+  TERM on := Binary 1.000 inf;
+END_FUZZIFY
+
+FUZZIFY rain
+  RANGE := (0.000 .. 100.000);
+  TERM light := Triangle 0.000 0.000 65.000;
+  TERM heavy := Triangle 35.000 100.000 100.000;
+END_FUZZIFY
+
+FUZZIFY light_out
+  RANGE := (0.000 .. 100.000);
+  TERM dark := Triangle 0.000 0.000 50.000;
+  TERM medium := Triangle 0.001 50.000 99.999;
+  TERM bright := Triangle 50.000 100.000 100.000;
+END_FUZZIFY
+
+FUZZIFY room_window
+  RANGE := (0.000 .. 2.000);
+  TERM no := Binary 0.999 -inf;
+  TERM yes := Binary 1.000 inf;
+END_FUZZIFY
+
+FUZZIFY sound_detector
+  RANGE := (0.000 .. 130.000);
+  TERM quiet := Triangle 0.000 0.000 80.000;
+  TERM loud := Triangle 50.000 130.000 130.000;
+END_FUZZIFY
+
+FUZZIFY word_detector
+  RANGE := (0.000 .. 2.000);
+  TERM not_help := Trapezoid 0.000 0.000 0.750 1.250;
+  TERM help := Trapezoid 0.750 1.250 2.000 2.000;
+END_FUZZIFY
+
+FUZZIFY pulse_sensor
+  RANGE := (0.000 .. 120.000);
+  TERM dangerous_below_limit := Trapezoid 0.000 0.000 35.000 42.500;
+  TERM athlete := Trapezoid 39.000 40.000 60.000 62.500;
+  TERM normal := Trapezoid 58.500 60.000 100.000 102.500;
+  TERM dangerous_over_limit := Trapezoid 99.000 100.000 120.000 120.000;
+END_FUZZIFY
+
+FUZZIFY closed_opened_sensor
+  RANGE := (0.000 .. 3.000);
+  TERM none := Rectangle 0.000 0.999;
+  TERM closed := Rectangle 1.000 2.000;
+  TERM opened := Rectangle 2.000 3.000;
+END_FUZZIFY
+
+FUZZIFY motion_detector_doors
+  RANGE := (0.000 .. 30000.000);
+  TERM below_threshold := Trapezoid 0.000 0.000 14000.000 16000.000;
+  TERM above_threshold := Trapezoid 14000.000 16000.000 30000.000 30000.000;
+END_FUZZIFY
+
+FUZZIFY time_of_opened_doors
+  RANGE := (0.000 .. 50.000);
+  TERM less_than_25seconds := Trapezoid 0.000 0.000 24.000 26.000;
+  TERM more_than_25seconds := Trapezoid 24.000 26.000 50.000 50.000;
+END_FUZZIFY
+
+FUZZIFY pressure_on_elevator
+  RANGE := (0.000 .. 450.000);
+  TERM below_limit := Trapezoid 0.000 0.000 350.000 370.000;
+  TERM over_limit := Trapezoid 350.000 370.000 450.000 450.000;
+END_FUZZIFY
+
+FUZZIFY number_of_people_in_elevator
+  RANGE := (0.000 .. 6.000);
+  TERM below_limit := Binary 4.000 -inf;
+  TERM over_limit := Binary 4.001 inf;
+END_FUZZIFY
+
+FUZZIFY speed_of_orientation_change
+  RANGE := (0.000 .. 3.000);
+  TERM none := Rectangle 0.000 0.000;
+  TERM fast := Trapezoid 0.001 0.001 1.250 1.750;
+  TERM normal := Trapezoid 1.250 1.750 3.000 3.000;
+END_FUZZIFY
+
+FUZZIFY orientation_of_person_after_change
+  RANGE := (0.000 .. 2.000);
+  TERM vertical := Trapezoid 0.000 0.000 0.750 1.250;
+  TERM horizontal := Trapezoid 0.750 1.250 2.000 2.000;
+END_FUZZIFY
+
+FUZZIFY time_on_the_ground
+  RANGE := (0.000 .. 90.000);
+  TERM less_than_1_hour := Trapezoid 0.000 0.000 58.000 62.000;
+  TERM more_than_1_hour := Trapezoid 58.000 62.000 90.000 90.000;
+END_FUZZIFY
+
+DEFUZZIFY havc
+  RANGE := (-30.000 .. 30.000);
+  TERM cooler := Triangle -30.000 -30.000 -2.000;
+  TERM air_ventilation := Triangle -5.000 0.000 5.000;
+  TERM heater := Triangle 2.000 30.000 30.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY windows
+  RANGE := (0.000 .. 100.000);
+  TERM close := Triangle 0.000 0.000 20.000;
+  TERM open := Triangle 0.000 100.000 100.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY artificial_light_ins
+  RANGE := (0.000 .. 100.000);
+  TERM off := Rectangle 0.000 0.000;
+  TERM medium := Trapezoid 0.001 0.001 32.500 65.000;
+  TERM bright := Triangle 32.500 100.000 100.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY curtains
+  RANGE := (0.000 .. 100.000);
+  TERM close := Triangle 0.000 0.000 20.000;
+  TERM open := Triangle 0.000 100.000 100.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY call_patron
+  RANGE := (0.000 .. 100.000);
+  TERM no := Triangle 0.000 0.000 99.999;
+  TERM yes := Triangle 0.001 100.000 100.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY notify_doctor
+  RANGE := (0.000 .. 100.000);
+  TERM no := Triangle 0.000 0.000 99.999;
+  TERM yes := Triangle 0.001 100.000 100.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY state_of_doors
+  RANGE := (0.000 .. 4.000);
+  TERM closed := Triangle 0.000 0.000 1.000;
+  TERM closing := Trapezoid 0.001 1.001 1.999 1.999;
+  TERM opening := Trapezoid 2.000 2.000 3.000 4.000;
+  TERM opened := Triangle 3.000 4.000 4.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY alarm_in_elevator
+  RANGE := (0.000 .. 1.000);
+  TERM off := Trapezoid 0.000 0.000 0.400 0.600;
+  TERM on := Trapezoid 0.400 0.600 1.000 1.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+DEFUZZIFY fall_sensor
+  RANGE := (0.000 .. 3.000);
+  TERM none := Trapezoid 0.000 0.000 0.900 1.100;
+  TERM notify := Trapezoid 0.900 1.100 1.900 2.100;
+  TERM notify_and_register_for_special_examination := Trapezoid 1.900 2.100 3.000 3.000;
+  METHOD : COG;
+  ACCU : MAX;
+  DEFAULT := nan;
+END_DEFUZZIFY
+
+RULEBLOCK havc_on
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if havc_power is on and t_ins is very_low then havc is very heater and windows is close
+  RULE 2 : if havc_power is on and t_ins is low then havc is heater and windows is close
+  RULE 3 : if havc_power is on and t_ins is neutral then havc is air_ventilation and windows is close
+  RULE 4 : if havc_power is on and t_ins is high then havc is cooler and windows is close
+  RULE 5 : if havc_power is on and t_ins is very_high then havc is very cooler and windows is close
+END_RULEBLOCK
+
+RULEBLOCK havc_off
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if havc_power is off and rain is very heavy then windows is close
+  RULE 2 : if havc_power is off and rain is light and t_ins is very_low and t_out is very_low then windows is somewhat open
+  RULE 3 : if havc_power is off and rain is light and t_ins is very_low and t_out is low then windows is open
+  RULE 4 : if havc_power is off and rain is light and t_ins is very_low and t_out is neutral then windows is very open
+  RULE 5 : if havc_power is off and rain is light and t_ins is very_low and t_out is high then windows is extremely open
+  RULE 6 : if havc_power is off and rain is light and t_ins is very_low and t_out is very_high then windows is any open
+  RULE 7 : if havc_power is off and rain is light and t_ins is low and t_out is very_low then windows is seldom open
+  RULE 8 : if havc_power is off and rain is light and t_ins is low and t_out is low then windows is somewhat open
+  RULE 9 : if havc_power is off and rain is light and t_ins is low and t_out is neutral then windows is open
+  RULE 10 : if havc_power is off and rain is light and t_ins is low and t_out is high then windows is very open
+  RULE 11 : if havc_power is off and rain is light and t_ins is low and t_out is very_high then windows is extremely open
+  RULE 12 : if havc_power is off and rain is light and t_ins is neutral and t_out is very_high then windows is seldom open
+  RULE 13 : if havc_power is off and rain is light and t_ins is neutral and t_out is high then windows is somewhat open
+  RULE 14 : if havc_power is off and rain is light and t_ins is neutral and t_out is neutral then windows is open
+  RULE 15 : if havc_power is off and rain is light and t_ins is neutral and t_out is low then windows is somewhat open
+  RULE 16 : if havc_power is off and rain is light and t_ins is neutral and t_out is very_low then windows is seldom open
+  RULE 17 : if havc_power is off and rain is light and t_ins is high and t_out is very_low then windows is extremely open
+  RULE 18 : if havc_power is off and rain is light and t_ins is high and t_out is low then windows is very open
+  RULE 19 : if havc_power is off and rain is light and t_ins is high and t_out is neutral then windows is open
+  RULE 20 : if havc_power is off and rain is light and t_ins is high and t_out is high then windows is somewhat open
+  RULE 21 : if havc_power is off and rain is light and t_ins is high and t_out is very_high then windows is seldom open
+  RULE 22 : if havc_power is off and rain is light and t_ins is very_high and t_out is very_low then windows is any open
+  RULE 23 : if havc_power is off and rain is light and t_ins is very_high and t_out is low then windows is extremely open
+  RULE 24 : if havc_power is off and rain is light and t_ins is very_high and t_out is neutral then windows is very open
+  RULE 25 : if havc_power is off and rain is light and t_ins is very_high and t_out is high then windows is open
+  RULE 26 : if havc_power is off and rain is light and t_ins is very_high and t_out is very_high then windows is somewhat open
+END_RULEBLOCK
+
+RULEBLOCK light
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if room_window is no then artificial_light_ins is bright
+  RULE 2 : if room_window is yes and light_out is dark then artificial_light_ins is bright and curtains is close
+  RULE 3 : if room_window is yes and light_out is medium then artificial_light_ins is medium and curtains is somewhat open
+  RULE 4 : if room_window is yes and light_out is bright then artificial_light_ins is off and curtains is very open
+END_RULEBLOCK
+
+RULEBLOCK call_patron
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if sound_detector is quiet and word_detector is not_help then call_patron is no
+  RULE 2 : if sound_detector is quiet and word_detector is help then call_patron is yes
+  RULE 3 : if sound_detector is loud then call_patron is yes
+END_RULEBLOCK
+
+RULEBLOCK pulse_sensor
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if pulse_sensor is dangerous_below_limit then notify_doctor is any yes
+  RULE 2 : if pulse_sensor is athlete then notify_doctor is very somewhat no
+  RULE 3 : if pulse_sensor is normal then notify_doctor is no
+  RULE 4 : if pulse_sensor is dangerous_over_limit then notify_doctor is any yes
+END_RULEBLOCK
+
+RULEBLOCK doors
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if closed_opened_sensor is closed then state_of_doors is closed with 0.5
+  RULE 2 : if closed_opened_sensor is opened then state_of_doors is opened with 0.5
+  RULE 3 : if motion_detector_doors is above_threshold then state_of_doors is opening with 1
+  RULE 4 : if motion_detector_doors is below_threshold and time_of_opened_doors is more_than_25seconds then state_of_doors is closing with 1
+END_RULEBLOCK
+
+RULEBLOCK alarm_in_elevator
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if pressure_on_elevator is below_limit and number_of_people_in_elevator is below_limit then alarm_in_elevator is off
+  RULE 2 : if pressure_on_elevator is below_limit and number_of_people_in_elevator is over_limit then alarm_in_elevator is on
+  RULE 3 : if pressure_on_elevator is over_limit and number_of_people_in_elevator is below_limit then alarm_in_elevator is on
+  RULE 4 : if pressure_on_elevator is over_limit and number_of_people_in_elevator is over_limit then alarm_in_elevator is on
+END_RULEBLOCK
+
+RULEBLOCK fall_detector
+  AND : MIN;
+  OR : MAX;
+  ACT : MIN;
+  RULE 1 : if speed_of_orientation_change is normal and orientation_of_person_after_change is horizontal and time_on_the_ground is more_than_1_hour then fall_sensor is notify
+  RULE 2 : if speed_of_orientation_change is fast and orientation_of_person_after_change is horizontal and time_on_the_ground is less_than_1_hour then fall_sensor is notify
+  RULE 3 : if speed_of_orientation_change is fast and orientation_of_person_after_change is horizontal and time_on_the_ground is more_than_1_hour then fall_sensor is notify_and_register_for_special_examination
+  RULE 4 : if speed_of_orientation_change is normal and orientation_of_person_after_change is horizontal and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  RULE 5 : if speed_of_orientation_change is normal and orientation_of_person_after_change is vertical and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  RULE 6 : if speed_of_orientation_change is normal and orientation_of_person_after_change is vertical and time_on_the_ground is more_than_1_hour then fall_sensor is none
+  RULE 7 : if speed_of_orientation_change is fast and orientation_of_person_after_change is vertical and time_on_the_ground is less_than_1_hour then fall_sensor is none
+  RULE 8 : if speed_of_orientation_change is fast and orientation_of_person_after_change is vertical and time_on_the_ground is more_than_1_hour then fall_sensor is none
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
